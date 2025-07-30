@@ -1,0 +1,26 @@
+model User {
+    id String @id @default(uuid()) @db.Uuid
+
+    avatar_url String? @db.VarChar(255)
+    email      String  @unique @db.VarChar(255)
+    password   String  @db.VarChar(255)
+
+    last_login_at    DateTime?
+    is_active        Boolean        @default(true)
+    created_at       DateTime       @default(now())
+    updated_at       DateTime       @updatedAt
+    deleted_at       DateTime?
+    role             Role           @default(USER)
+    logs_user_events LogUserEvent[]
+
+    @@index([is_active])
+    @@index([last_login_at])
+    @@index([deleted_at])
+    @@map("users")
+}
+
+enum Role {
+    USER
+    ADMIN
+    BOT
+}

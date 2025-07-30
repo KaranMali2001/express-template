@@ -1,0 +1,17 @@
+model LogUserEvent {
+    id         String    @id @default(uuid()) @db.Uuid
+    user_id    String?   @db.Uuid
+    event_type String    @db.VarChar(100)
+    metadata   Json?
+    timestamp  DateTime  @default(now())
+    deleted_at DateTime?
+
+    // Relations
+    user User? @relation(fields: [user_id], references: [id])
+
+    @@index([user_id])
+    @@index([event_type])
+    @@index([timestamp])
+    @@index([deleted_at])
+    @@map("logs_user_events")
+}
