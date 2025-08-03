@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    container_name: node_prisma_app
+    volumes:
+      - .:/usr/src/app # Sync source code for hot reload
+      - /usr/src/app/node_modules # Prevent overwriting node_modules
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env.development
+    command: pnpm dev
